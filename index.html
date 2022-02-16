@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+    <title>AliginmentTips</title>
+</head>
+<body>
+  <h2>右侧方块长度不固定，要求两个方块填满一行</h2>
+  <div style="display:flex;align-items:center;overflow: hidden;">
+    <div style="width:100%;height:50px;background-color: burlywood;"></div>
+    <div id="rightBlock" style="width:50px;height:50px;background-color:lightsalmon;"></div>
+  </div>
+  <h2>左侧方块高度随窗口大小变化，要求两个方块高度一致</h2>
+  <div style="display: flex; position: relative">
+    <div style="padding: 20%;background-color: indianred;">
+    </div>
+    <div style="position: absolute; width:60%; overflow:auto; top:0; bottom:0;right:0;background-color:indigo;">
+    </div>
+  </div>
+  <script>
+    function add(setNum){
+        let num = 0;
+        let addNum = 50;
+        var inner = document.getElementById("rightBlock");
+        var set = setInterval(function(){
+          if(num >= setNum){
+            num = setNum;
+            inner.style.width = setNum+'px'
+            clearInterval(set);
+          }else{
+            num +=addNum;
+            inner.style.width = num+'px'
+          }
+        },500);
+    }
+    add(300) // 这里调用传值    
+  </script>
+</body>
