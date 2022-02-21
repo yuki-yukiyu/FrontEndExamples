@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<head>
+    <title>PlanetLoading</title>
+    <style>
+        .curtain {
+            margin: 0 auto;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .curtain__panel {
+            display: flex;
+            align-items: center;
+            background: #455773;
+            color: #fff;
+            float: left;
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            transition: all 1s ease-out;
+            z-index: 999;
+        }
+
+        .curtain__content {
+            align-items: center;
+            background: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            padding: 1rem 0;
+            position: absolute;
+            text-align: center;
+            background:#7ea1bf;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .open .curtain__panel--left {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        .open .curtain__panel--right {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        .curtain__panel--left {
+            justify-content: flex-end;
+            border-radius: 0.25rem 0 0 0.25rem;
+            transform: translateX(0);
+        }
+
+        .curtain__panel--right {
+            left: 50%;
+            justify-content: flex-start;
+            border-radius: 0 0.25rem 0.25rem 0;
+            transform: translateX(0);
+        }
+
+        .curtain__content {
+            align-items: center;
+            background: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            padding: 1rem 0;
+            position: absolute;
+            text-align: center;
+            background: radial-gradient(#9b59b6, #8e44ad);
+            z-index: 1;
+            width: 100%;
+        }
+
+        @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
+
+        .content {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-50%);
+        }
+
+        .content .planet {
+            width: 65%;
+            height: 65%;
+            background-color: #546c8c;
+            border-radius: 100%;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            transform-origin: center center;
+            box-shadow: inset 2px -10px 0px rgba(0, 0, 0, 0.1);
+            animation: planet 5s ease infinite alternate;
+
+            @keyframes planet {
+                0% {
+                    transform: rotate(10deg);
+                }
+
+                100% {
+                    transform: rotate(-10deg);
+                }
+            }
+        }
+
+        /* planet ring */
+        .planet .ring {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 100%;
+            background-color: #bacbd9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-origin: 33% center;
+            box-shadow: 2px -10px 0px rgba(0, 0, 0, 0.1),
+                inset -5px -10px 0px rgba(0, 0, 0, 0.1);
+            animation: ring 3s ease infinite;
+        }
+
+        @keyframes ring {
+            0% {
+                transform: rotateX(110deg) rotateZ(0deg) translate(-50px, 5px);
+            }
+
+            100% {
+                transform: rotateX(110deg) rotateZ(360deg) translate(-50px, 5px);
+            }
+        }
+
+        /* small ball */
+        .ring:before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 30px;
+            border-radius: 100%;
+            background-color: #7ea1bf;
+            z-index: 2;
+            left: calc(0px - 5px);
+            box-shadow: inset -3px 3px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        /* inner ring */
+        .ring:after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 100%;
+            background-color: #7ea1bf;
+            box-shadow: inset 2px -10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        /* to cover the back of the ring */
+        .cover-ring {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            border-bottom-left-radius: 80%;
+            border-bottom-right-radius: 80%;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            transform: translate(0px, -17px);
+            background-color: #546c8c;
+            z-index: 2;
+            box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        /* planet spots */
+        .spots {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            z-index: 2;
+        }
+
+        .spots span {
+            width: 30px;
+            height: 30px;
+            background-color: #3c4359;
+            position: absolute;
+            border-radius: 100%;
+            box-shadow: inset -2px 3px 0px rgba(0, 0, 0, 0.3);
+            animation: dots 5s ease infinite alternate;
+        }
+
+        @keyframes dots {
+            0% {
+                box-shadow: inset -3px 3px 0px rgba(0, 0, 0, 0.3);
+            }
+
+            100% {
+                box-shadow: inset 3px 3px 0px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .spots span:nth-child(1) {
+            top: 20px;
+            right: 50px;
+        }
+
+        .spots span:nth-child(2) {
+            top: 40px;
+            left: 50px;
+            width: 15px;
+            height: 15px;
+        }
+
+        .spots span:nth-child(3) {
+            top: 80px;
+            left: 20px;
+            width: 25px;
+            height: 25px;
+        }
+
+        .spots span:nth-child(4) {
+            top: 80px;
+            left: 90px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .spots span:nth-child(5) {
+            top: 160px;
+            left: 70px;
+            width: 15px;
+            height: 15px;
+        }
+
+        .spots span:nth-child(6) {
+            top: 165px;
+            left: 125px;
+            width: 10px;
+            height: 10px;
+        }
+
+        .spots span:nth-child(7) {
+            top: 90px;
+            left: 150px;
+            width: 15px;
+            height: 15px;
+        }
+
+        p {
+            color: #bacbd9;
+            font-size: 36px;
+            z-index: 2;
+            position: absolute;
+            top: -30px;
+            font-family: "Roboto Mono", monospace;
+            animation: text 4s ease infinite;
+            width: 600px;
+            text-align: center;
+        }
+
+        @keyframes text {
+            0% {
+                transform: translateX(-30px);
+                letter-spacing: 0px;
+                color: #bacbd9;
+            }
+
+            25% {
+                letter-spacing: 3px;
+                color: #7ea1bf;
+            }
+
+            50% {
+                transform: translateX(30px);
+                letter-spacing: 0px;
+                color: #bacbd9;
+            }
+
+            75% {
+                letter-spacing: 3px;
+                color: #7ea1bf;
+            }
+
+            100% {
+                transform: translateX(-30px);
+                letter-spacing: 0px;
+                color: #bacbd9;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="curtain" id="curtain">
+        <div class="curtain__panel curtain__panel--left">
+        </div>
+        <div class="curtain__content"></div>
+        <div class="curtain__panel curtain__panel--right">
+            <div class="content">
+                <div class="planet">
+                    <div class="ring"></div>
+                    <div class="cover-ring"></div>
+                    <div class="spots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <p>Click to open</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        var curtain = document.getElementById('curtain')
+        curtain.addEventListener('click', ()=>{
+            if(curtain.className === 'curtain') 
+                curtain.className = 'open curtain'
+            else 
+                curtain.className = 'curtain'
+        })
+    </script>
+</body>
